@@ -40,3 +40,7 @@ out/
 
 # VS Code
 .vscode/
+
+.next-version.txt
+.release-notes.txt
+git-sv

@@ -5,10 +5,17 @@ plugins {
 }
 
 group = "de.timpavone1990"
-version = "0.0.1-SNAPSHOT"
+
+val javaVersion = 17
 
 tasks.compileJava {
-    options.release.set(17)
+    options.release.set(javaVersion)
+}
+
+java {
+    toolchain {
+        languageVersion.set(JavaLanguageVersion.of(javaVersion))
+    }
 }
 
 repositories {
