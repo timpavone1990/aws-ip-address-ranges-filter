@@ -1,0 +1,4 @@
+clients:
+  aws:
+    ip-address-ranges:
+      url: https://ip-ranges.amazonaws.com/
