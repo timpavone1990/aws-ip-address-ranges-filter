@@ -1,0 +1,44 @@
+openapi: 3.0.3
+info:
+  title: AWS IP address ranges filter API
+  version: 0.1.0
+paths:
+  /v1/aws/ip-address-ranges:
+    get:
+      summary: Get a filtered list of AWS IP address ranges
+      operationId: findAwsIpAddressRangesByRegion
+      parameters:
+        - name: region
+          in: query
+          description: AWS region to filter for
+          required: false
+          schema:
+            $ref: "#/components/schemas/RegionFilter"
+      responses:
+        "200":
+          description: Request was successfully handled.
+          content:
+            text/plain:
+              schema:
+                title: Region IP address ranges response
+                type: string
+              example: |
+                EU 52.219.170.0/23
+                EU 52.219.168.0/24
+        "422":
+          description: Invalid region parameter
+      tags:
+        - AWS IP address ranges
+components:
+  schemas:
+    RegionFilter:
+      type: string
+      enum:
+        - ALL
+        - EU
+        - US
+        - AP
+        - CN
+        - SA
+        - AF
+        - CA
