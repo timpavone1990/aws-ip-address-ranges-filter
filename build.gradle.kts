@@ -46,12 +46,11 @@ sourceSets {
     }
 }
 
-tasks.named<Test>("test") {
-    useJUnitPlatform()
-}
-
 tasks {
     "compileJava" {
         dependsOn("openApiGenerate")
+    }
+    named<Test>("test") {
+        useJUnitPlatform()
     }
 }
