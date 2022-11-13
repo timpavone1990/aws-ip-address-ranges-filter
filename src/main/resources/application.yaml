@@ -11,5 +11,5 @@ management:
   endpoints:
     web:
       exposure:
-        include: metrics
+        include: health,metrics
       base-path: /
