@@ -2,6 +2,7 @@ plugins {
     id("org.springframework.boot") version "2.7.5"
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("org.openapi.generator") version "6.2.1"
+    id("com.google.cloud.tools.jib") version "3.3.1"
     `java`
 }
 
@@ -52,6 +53,20 @@ sourceSets {
         java {
             srcDir("$buildDir/generated/src/main/java")
         }
+    }
+}
+
+jib {
+    from {
+        image = "gcr.io/distroless/java17-debian11"
+    }
+    to {
+        image = "timpavone1990/aws-ip-address-range-filter"
+        tags = setOf(version.toString())
+    }
+    container {
+        labels.put("maintainer", "Tim Pavone <tim.pavone@t-online.de>")
+        ports = listOf("8080")
     }
 }
 
