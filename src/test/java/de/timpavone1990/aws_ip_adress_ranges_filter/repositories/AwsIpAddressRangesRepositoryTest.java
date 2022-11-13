@@ -21,6 +21,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Mock
     private AwsIpAddressRangesClient client;
+    private RegionFilterStrategySupplier regionFilterStrategySupplier = new RegionFilterStrategySupplier();
 
     @BeforeEach
     void setUp() {
@@ -34,7 +35,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Test
     void testRegionIsNull() {
-        final var repository = new AwsIpAddressRangesRepository(client);
+        final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
         final var ranges = repository.findIpAddressRangesByRegion(null);
         assertThat(ranges).isNotNull();
         assertThat(ranges).hasSize(3);
@@ -42,7 +43,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Test
     void testRegionAll() {
-        final var repository = new AwsIpAddressRangesRepository(client);
+        final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
         final var ranges = repository.findIpAddressRangesByRegion(ALL);
         assertThat(ranges).isNotNull();
         assertThat(ranges).hasSize(3);
@@ -50,7 +51,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Test
     void testRegionEU() {
-        final var repository = new AwsIpAddressRangesRepository(client);
+        final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
         final var ranges = repository.findIpAddressRangesByRegion(EU);
         assertThat(ranges).isNotNull();
         assertThat(ranges).hasSize(2);
