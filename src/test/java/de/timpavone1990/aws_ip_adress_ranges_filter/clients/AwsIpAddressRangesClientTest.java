@@ -1,6 +1,7 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.clients;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
+import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -9,8 +10,6 @@ import org.springframework.cloud.contract.wiremock.AutoConfigureWireMock;
 import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-
-import java.util.concurrent.TimeUnit;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -75,8 +74,15 @@ class AwsIpAddressRangesClientTest {
         );
         final var ipAddressRanges = client.getIpAddressRanges();
         assertThat(ipAddressRanges).isNotNull();
-        assertThat(ipAddressRanges.prefixes()).isNotNull();
-        assertThat(ipAddressRanges.prefixes()).as("Check the amount of prefixes in the AWS IP address ranges.").hasSize(3);
+
+        final var prefixes = ipAddressRanges.prefixes();
+        assertThat(prefixes).isNotNull();
+        assertThat(prefixes).as("Check the amount of prefixes in the AWS IP address ranges.").hasSize(3);
+        assertThat(prefixes).containsExactlyInAnyOrder(
+            new Prefix("3.2.34.0/26", "af-south-1"),
+            new Prefix("3.5.140.0/22", "ap-northeast-2"),
+            new Prefix("13.34.37.64/27", "ap-southeast-4")
+        );
     }
 
     @Test
