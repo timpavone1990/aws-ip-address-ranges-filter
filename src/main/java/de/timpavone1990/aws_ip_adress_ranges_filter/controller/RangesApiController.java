@@ -1,5 +1,6 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.controller;
 
+import de.timpavone1990.aws_ip_adress_ranges_filter.controller.model.AwsIpAddressRangesResponse;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.api.RangesApi;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsIpAddressRangesRepository;
@@ -14,7 +15,6 @@ import org.springframework.web.method.annotation.MethodArgumentTypeMismatchExcep
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -34,9 +34,8 @@ public class RangesApiController implements RangesApi {
     @Override
     public ResponseEntity<String> findAwsIpAddressRangesByRegion(final RegionFilter region) {
         logger.info("Collecting ip address ranges for region={}", region);
-        final var response = awsIpAddressRangesRepository.findIpAddressRangesByRegion(region).stream()
-                .map(entry -> entry.region().substring(0, 2).toUpperCase(Locale.getDefault()) + " " + entry.ipPrefix())
-                .collect(Collectors.joining("\n"));
+        final var ipAddressRanges = awsIpAddressRangesRepository.findIpAddressRangesByRegion(region);
+        final var response = AwsIpAddressRangesResponse.fromPrefixes(ipAddressRanges);
         logger.debug("Collected ip address ranges for region={}: {}", region, response);
         return ResponseEntity.of(Optional.of(response + "\n"));
     }
