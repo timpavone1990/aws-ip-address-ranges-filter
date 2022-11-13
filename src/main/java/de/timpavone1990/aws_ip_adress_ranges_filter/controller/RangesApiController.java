@@ -1,9 +1,8 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.controller;
 
-import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesClient;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.api.RangesApi;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
-import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsIpAddressRangesRepository;
 import io.micrometer.core.annotation.Timed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,33 +15,24 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
 @Timed
 public class RangesApiController implements RangesApi {
 
-    private final AwsIpAddressRangesClient client;
+    private final AwsIpAddressRangesRepository awsIpAddressRangesRepository;
 
-    public RangesApiController(final AwsIpAddressRangesClient client) {
-        this.client = client;
+    public RangesApiController(final AwsIpAddressRangesRepository awsIpAddressRangesRepository) {
+        this.awsIpAddressRangesRepository = awsIpAddressRangesRepository;
     }
 
     @Override
     public ResponseEntity<String> findAwsIpAddressRangesByRegion(RegionFilter region) {
-        final var ipAddressRanges = client.getIpAddressRanges().prefixes();
-        final var filteredIpRanges = region == null || region == RegionFilter.ALL ? ipAddressRanges : filterByRegion(ipAddressRanges, region);
-        final var response = filteredIpRanges.stream()
+        final var response = awsIpAddressRangesRepository.findIpAddressRangesByRegion(region).stream()
                 .map(entry -> entry.region().substring(0, 2).toUpperCase(Locale.getDefault()) + " " + entry.ipPrefix())
                 .collect(Collectors.joining("\n"));
         return ResponseEntity.of(Optional.of(response + "\n"));
-    }
-
-    private Set<Prefix> filterByRegion(Set<Prefix> ipAddressRanges, RegionFilter region) {
-        return ipAddressRanges.stream()
-                .filter(prefix -> prefix.region().startsWith(region.getValue().toLowerCase(Locale.getDefault())))
-                .collect(Collectors.toSet());
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
