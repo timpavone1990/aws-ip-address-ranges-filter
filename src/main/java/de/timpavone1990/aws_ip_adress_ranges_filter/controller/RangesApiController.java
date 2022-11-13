@@ -4,6 +4,8 @@ import de.timpavone1990.aws_ip_adress_ranges_filter.generated.api.RangesApi;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsIpAddressRangesRepository;
 import io.micrometer.core.annotation.Timed;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -21,6 +23,7 @@ import java.util.stream.Collectors;
 @Timed
 public class RangesApiController implements RangesApi {
 
+    private final Logger logger = LoggerFactory.getLogger(RangesApiController.class);
     private final AwsIpAddressRangesRepository awsIpAddressRangesRepository;
 
     public RangesApiController(final AwsIpAddressRangesRepository awsIpAddressRangesRepository) {
@@ -28,10 +31,12 @@ public class RangesApiController implements RangesApi {
     }
 
     @Override
-    public ResponseEntity<String> findAwsIpAddressRangesByRegion(RegionFilter region) {
+    public ResponseEntity<String> findAwsIpAddressRangesByRegion(final RegionFilter region) {
+        logger.info("Collecting ip address ranges for region={}", region);
         final var response = awsIpAddressRangesRepository.findIpAddressRangesByRegion(region).stream()
                 .map(entry -> entry.region().substring(0, 2).toUpperCase(Locale.getDefault()) + " " + entry.ipPrefix())
                 .collect(Collectors.joining("\n"));
+        logger.debug("Collected ip address ranges for region={}: {}", region, response);
         return ResponseEntity.of(Optional.of(response + "\n"));
     }
 
