@@ -1,1 +1,1 @@
-rootProject.name = "aws-ip-address-ranges-filter"
+rootProject.name = "AWS IP address ranges filter"

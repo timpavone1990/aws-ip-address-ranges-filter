@@ -7,6 +7,7 @@ plugins {
 }
 
 group = "de.timpavone1990"
+description = "Service to filter the AWS IP address ranges"
 
 val javaVersion = 17
 
@@ -78,5 +79,10 @@ tasks {
     }
     named<Test>("test") {
         useJUnitPlatform()
+    }
+    named<AbstractCopyTask>("processResources") {
+        filesMatching("application.yaml") {
+            expand(project.properties)
+        }
     }
 }

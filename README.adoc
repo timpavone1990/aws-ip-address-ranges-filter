@@ -10,3 +10,4 @@ Service to filter the AWS IP address ranges.
 
 - Metrics are recorded in-memory and are exposed at `http(s)://<SERVER>:<PORT>/<CONTEXT_PATH>/metrics`
 - The application health status is exposed at `http(s)://<SERVER>:<PORT>/<CONTEXT_PATH>/health`
+- General information about the application is exposed at `http(s)://<SERVER>:<PORT>/<CONTEXT_PATH>/info`

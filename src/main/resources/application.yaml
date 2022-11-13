@@ -8,8 +8,17 @@ clients:
       url: https://ip-ranges.amazonaws.com/
 
 management:
+  info:
+    env:
+      enabled: true
   endpoints:
     web:
       exposure:
-        include: health,metrics
+        include: health,info,metrics
       base-path: /
+
+info:
+  app:
+    name: ${name}
+    description: ${description}
+    version: ${version}
