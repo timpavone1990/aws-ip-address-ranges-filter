@@ -3,7 +3,8 @@ plugins {
     id("io.spring.dependency-management") version "1.0.15.RELEASE"
     id("org.openapi.generator") version "6.2.1"
     id("com.google.cloud.tools.jib") version "3.3.1"
-    `java`
+    java
+    jacoco
 }
 
 group = "de.timpavone1990"
@@ -75,6 +76,9 @@ jib {
 }
 
 tasks {
+    "check" {
+        finalizedBy("jacocoTestReport", "jacocoTestCoverageVerification")
+    }
     "compileJava" {
         dependsOn("openApiGenerate")
     }
@@ -84,6 +88,24 @@ tasks {
     named<AbstractCopyTask>("processResources") {
         filesMatching("application.yaml") {
             expand(project.properties)
+        }
+    }
+
+    jacocoTestReport {
+        reports {
+            xml.required.set(false)
+            csv.required.set(false)
+            html.required.set(true)
+        }
+    }
+
+    jacocoTestCoverageVerification {
+        violationRules {
+            rule {
+                limit {
+                    minimum = "0.7".toBigDecimal()
+                }
+            }
         }
     }
 }
