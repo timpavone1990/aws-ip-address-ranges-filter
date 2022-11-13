@@ -51,7 +51,7 @@ class RangesApiControllerTest {
         void testUnknownRegion() throws Exception {
             mockMvc.perform(get("/v1/aws/ip-address-ranges?region=ASD"))
                     .andExpect(status().isUnprocessableEntity())
-                    .andExpect(result -> assertThat(result.getResponse().getErrorMessage()).isEqualTo("Parameter region must be empty or one of: ALL, EU, US, AP, CN, SA, AF, CA"));
+                    .andExpect(content().string("Parameter region must be empty or one of: ALL, EU, US, AP, CN, SA, AF, CA"));
         }
     }
 }

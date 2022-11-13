@@ -6,7 +6,6 @@ import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsIpAddressRan
 import io.micrometer.core.annotation.Timed;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,6 +17,8 @@ import java.util.Arrays;
 import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static org.springframework.http.HttpStatus.UNPROCESSABLE_ENTITY;
 
 @RestController
 @Timed
@@ -41,8 +42,9 @@ public class RangesApiController implements RangesApi {
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    public void handleInvalidRegionFilter(final HttpServletResponse response) throws IOException {
+    public ResponseEntity<String> handleInvalidRegionFilter(final HttpServletResponse response) throws IOException {
         final var validRegionFilters = Arrays.stream(RegionFilter.values()).map(RegionFilter::getValue).collect(Collectors.joining(", "));
-        response.sendError(HttpStatus.UNPROCESSABLE_ENTITY.value(), "Parameter region must be empty or one of: " + validRegionFilters);
+        final var message = "Parameter region must be empty or one of: " + validRegionFilters;
+        return ResponseEntity.status(UNPROCESSABLE_ENTITY).body(message);
     }
 }
