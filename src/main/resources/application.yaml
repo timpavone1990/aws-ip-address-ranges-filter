@@ -6,3 +6,10 @@ clients:
   aws:
     ip-address-ranges:
       url: https://ip-ranges.amazonaws.com/
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: metrics
+      base-path: /

@@ -5,3 +5,7 @@ Service to filter the AWS IP address ranges.
 == API
 - OpenAPI definition: `http(s)://<SERVER>:<PORT>/<CONTEXT_PATH>/v3/api-docs`
 - Swagger UI: `http(s)://<SERVER>:<PORT>/<CONTEXT_PATH>/swagger-ui.html`
+
+== Observability
+
+- Metrics are recorded in-memory and are exposed at `http(s)://<SERVER>:<PORT>/<CONTEXT_PATH>/metrics`

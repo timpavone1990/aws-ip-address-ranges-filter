@@ -32,8 +32,10 @@ dependencyManagement {
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springdoc:springdoc-openapi-ui:1.6.12")
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
+    implementation("io.micrometer:micrometer-core:1.10.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")

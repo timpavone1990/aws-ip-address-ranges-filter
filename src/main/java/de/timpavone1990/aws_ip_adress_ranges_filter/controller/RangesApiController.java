@@ -4,6 +4,7 @@ import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesCl
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.api.RangesApi;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -19,6 +20,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
+@Timed
 public class RangesApiController implements RangesApi {
 
     private final AwsIpAddressRangesClient client;
