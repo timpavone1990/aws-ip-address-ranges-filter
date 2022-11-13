@@ -22,8 +22,8 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@WebMvcTest(V1ApiController.class)
-class V1ApiControllerTest {
+@WebMvcTest(RangesApiController.class)
+class RangesApiControllerTest {
 
     @Autowired
     private MockMvc mockMvc;

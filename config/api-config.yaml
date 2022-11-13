@@ -3,3 +3,4 @@ modelPackage: de.timpavone1990.aws_ip_adress_ranges_filter.generated.model
 interfaceOnly: true
 enumPropertyNaming: original
 openApiNullable: false
+useTags: true

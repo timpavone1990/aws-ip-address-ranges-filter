@@ -1,7 +1,7 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.controller;
 
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesClient;
-import de.timpavone1990.aws_ip_adress_ranges_filter.generated.api.V1Api;
+import de.timpavone1990.aws_ip_adress_ranges_filter.generated.api.RangesApi;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
 import org.springframework.http.HttpStatus;
@@ -19,11 +19,11 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
-public class V1ApiController implements V1Api {
+public class RangesApiController implements RangesApi {
 
     private final AwsIpAddressRangesClient client;
 
-    public V1ApiController(final AwsIpAddressRangesClient client) {
+    public RangesApiController(final AwsIpAddressRangesClient client) {
         this.client = client;
     }
 

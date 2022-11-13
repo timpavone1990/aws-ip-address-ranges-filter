@@ -1,7 +1,10 @@
 openapi: 3.0.3
 info:
   title: AWS IP address ranges filter API
-  version: 0.1.0
+  version: 0.1.1
+tags:
+  - name: Ranges
+    description: Access to the AWS IP address ranges
 paths:
   /v1/aws/ip-address-ranges:
     get:
@@ -28,7 +31,7 @@ paths:
         "422":
           description: Invalid region parameter
       tags:
-        - AWS IP address ranges
+        - Ranges
 components:
   schemas:
     RegionFilter:
