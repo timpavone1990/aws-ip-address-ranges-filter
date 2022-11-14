@@ -4,6 +4,8 @@ NEXT_VERSION_FILE := .next-version.txt
 CAT_NEXT_VERSION_FILE := $$(cat $(NEXT_VERSION_FILE))
 RELEASE_NOTES_FILE := .release-notes.txt
 
+K6 := $(shell ./scripts/require-k6.sh)
+
 .PHONY: release
 release:
 	$(SV4GIT) next-version > .next-version.txt
@@ -20,6 +22,7 @@ release:
 		--silent \
 		"http://localhost:8080/v1/aws/ip-address-ranges?region=EU" \
 		| tail -n 5
+	$(K6) run ./scripts/find-ranges-perf.js
 	docker stop smoke-test-container
 	docker login \
 		--username $$DOCKER_HUB_USERNAME \
