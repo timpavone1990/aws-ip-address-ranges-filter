@@ -32,11 +32,11 @@ public class RangesApiController implements RangesApi {
     }
 
     @Override
-    public ResponseEntity<String> findAwsIpAddressRangesByRegion(final RegionFilter region) {
-        logger.info("Collecting ip address ranges for region={}", region);
-        final var ipAddressRanges = awsIpAddressRangesRepository.findIpAddressRangesByRegion(region);
-        final var response = AwsIpAddressRangesResponse.fromPrefixes(ipAddressRanges);
-        logger.debug("Collected ip address ranges for region={}: {}", region, response);
+    public ResponseEntity<String> findAwsIpAddressRangesByRegion(final RegionFilter regionFilter) {
+        logger.info("Collecting ip address ranges for regionFilter={}", regionFilter);
+        final var regions = awsIpAddressRangesRepository.findRegions(regionFilter);
+        final var response = AwsIpAddressRangesResponse.fromRegions(regions);
+        logger.debug("Collected ip address ranges for regionFilter={}: {}", regionFilter, response);
         return ResponseEntity.of(Optional.of(response + "\n"));
     }
 

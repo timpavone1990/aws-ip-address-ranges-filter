@@ -1,7 +1,7 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.clients;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;

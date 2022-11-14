@@ -1,7 +1,7 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.repositories;
 
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
-import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
 
 import java.util.Locale;
 import java.util.Set;

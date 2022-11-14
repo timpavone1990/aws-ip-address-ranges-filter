@@ -1,6 +1,6 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.controller;
 
-import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.model.Region;
 import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsIpAddressRangesRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -33,12 +33,12 @@ class RangesApiControllerTest {
 
         @Test
         void testIpAddressRangesResponseBodyFormat() throws Exception {
-            final var awsIpAddressRanges = Set.of(
-                    new Prefix("52.219.170.0/23", "eu-central-1"),
-                    new Prefix("52.219.160.0/23", "eu-central-2"),
-                    new Prefix("52.219.168.0/24", "us-east-1")
+            final var regions = Set.of(
+                    new Region("eu-central-1", Set.of("52.219.170.0/23")),
+                    new Region("eu-central-2", Set.of("52.219.160.0/23")),
+                    new Region("us-east-1", Set.of("52.219.168.0/24"))
             );
-            when(repository.findIpAddressRangesByRegion(any())).thenReturn(awsIpAddressRanges);
+            when(repository.findRegions(any())).thenReturn(regions);
             mockMvc.perform(get("/v1/aws/ip-address-ranges?region=ALL"))
                     .andExpect(status().isOk())
                     .andExpect(content().contentType("text/plain;charset=UTF-8"))

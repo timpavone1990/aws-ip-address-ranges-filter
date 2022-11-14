@@ -2,7 +2,7 @@ package de.timpavone1990.aws_ip_adress_ranges_filter.repositories;
 
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesClient;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.AwsIpAddressRangesClientResponse;
-import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,7 +21,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Mock
     private AwsIpAddressRangesClient client;
-    private RegionFilterStrategySupplier regionFilterStrategySupplier = new RegionFilterStrategySupplier();
+    private final RegionFilterStrategySupplier regionFilterStrategySupplier = new RegionFilterStrategySupplier();
 
     @BeforeEach
     void setUp() {
@@ -34,27 +34,27 @@ class AwsIpAddressRangesRepositoryTest {
     }
 
     @Test
-    void testRegionIsNull() {
+    void testRegionFilterIsNull() {
         final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
-        final var ranges = repository.findIpAddressRangesByRegion(null);
+        final var ranges = repository.findRegions(null);
         assertThat(ranges).isNotNull();
         assertThat(ranges).hasSize(3);
     }
 
     @Test
-    void testRegionAll() {
+    void testRegionFilterAll() {
         final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
-        final var ranges = repository.findIpAddressRangesByRegion(ALL);
+        final var ranges = repository.findRegions(ALL);
         assertThat(ranges).isNotNull();
         assertThat(ranges).hasSize(3);
     }
 
     @Test
-    void testRegionEU() {
+    void testRegionFilterEU() {
         final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
-        final var ranges = repository.findIpAddressRangesByRegion(EU);
-        assertThat(ranges).isNotNull();
-        assertThat(ranges).hasSize(2);
-        assertThat(ranges).allMatch(prefix -> prefix.region().startsWith("eu"));
+        final var regions = repository.findRegions(EU);
+        assertThat(regions).isNotNull();
+        assertThat(regions).hasSize(2);
+        assertThat(regions).allMatch(region -> region.code().startsWith("eu"));
     }
 }

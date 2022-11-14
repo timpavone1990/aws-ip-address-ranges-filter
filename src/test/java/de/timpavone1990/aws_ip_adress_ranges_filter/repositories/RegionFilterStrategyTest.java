@@ -1,7 +1,7 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.repositories;
 
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
-import de.timpavone1990.aws_ip_adress_ranges_filter.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
