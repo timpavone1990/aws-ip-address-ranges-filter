@@ -16,6 +16,16 @@ class AwsIpAddressRangesFilterApplicationTest {
     private TestRestTemplate restTemplate;
 
     @Test
+    void testGetALLIpAddressRanges() {
+        final var responseEntity = restTemplate.getForEntity("/v1/aws/ip-address-ranges?region=ALL", String.class);
+        assertThat(responseEntity.getStatusCode()).isEqualTo(OK);
+
+        final var body = responseEntity.getBody();
+        assertThat(body).isNotBlank();
+        assertThat(body.lines()).allMatch(line -> line.matches("^(.{2} \\d{1,3}\\.\\d{1,3}.\\d{1,3}.\\d{1,3}/\\d{1,2})$"));
+    }
+
+    @Test
     void testGetEUIpAddressRanges() {
         final var responseEntity = restTemplate.getForEntity("/v1/aws/ip-address-ranges?region=EU", String.class);
         assertThat(responseEntity.getStatusCode()).isEqualTo(OK);

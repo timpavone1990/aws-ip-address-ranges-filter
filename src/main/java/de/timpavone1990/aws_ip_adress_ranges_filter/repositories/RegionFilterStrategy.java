@@ -15,7 +15,7 @@ public enum RegionFilterStrategy {
             throw new IllegalArgumentException("Parameter region must not be null in REGION_MATCH_STRATEGY");
         }
         return prefixes.stream()
-            .filter(prefix -> prefix.region().toLowerCase(Locale.getDefault()).startsWith(region.getValue().toLowerCase(Locale.getDefault())))
+            .filter(prefix -> prefix.region().getCode().toLowerCase(Locale.getDefault()).startsWith(region.getValue().toLowerCase(Locale.getDefault())))
             .collect(Collectors.toSet());
     }),
 
