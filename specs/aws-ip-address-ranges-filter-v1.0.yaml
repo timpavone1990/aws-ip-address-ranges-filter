@@ -1,7 +1,7 @@
 openapi: 3.0.3
 info:
   title: AWS IP address ranges filter API
-  version: 0.1.1
+  version: 1.0.0
 tags:
   - name: Ranges
     description: Access to the AWS IP address ranges
