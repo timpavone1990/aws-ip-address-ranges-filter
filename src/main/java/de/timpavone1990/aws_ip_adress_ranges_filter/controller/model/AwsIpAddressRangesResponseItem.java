@@ -14,7 +14,7 @@ public record AwsIpAddressRangesResponseItem(String region, String ipAddressRang
         }
 
         final var regionCodeParts = region.code().split("-");
-        if (regionCodeParts.length != 3) {
+        if (regionCodeParts.length != 3 && regionCodeParts.length != 4) {
             throw new IllegalArgumentException("Region code " + region.code() + " has an unsupported format");
         }
 

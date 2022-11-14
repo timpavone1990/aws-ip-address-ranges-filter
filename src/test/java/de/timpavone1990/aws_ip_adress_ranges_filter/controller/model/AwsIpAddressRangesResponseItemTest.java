@@ -36,4 +36,10 @@ class AwsIpAddressRangesResponseItemTest {
         assertThat(sortedItems.get(1)).isEqualTo(new AwsIpAddressRangesResponseItem("EU", "4.5.6.7/23"));
         assertThat(sortedItems.get(1).toString()).isEqualTo("EU 4.5.6.7/23");
     }
+
+    @Test
+    void testFourPartsRegionCode() {
+        final var items = AwsIpAddressRangesResponseItem.createItemsFromRegion(new Region("us-gov-east-1", Set.of("1.2.3.4/21", "4.5.6.7/23")));
+        assertThat(items).hasSize(2);
+    }
 }
