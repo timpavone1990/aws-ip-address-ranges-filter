@@ -12,7 +12,7 @@ public enum RegionFilterStrategy {
 
     REGION_MATCH_STRATEGY((prefixes, region) -> {
         if (region == null) {
-            throw new IllegalArgumentException("Parameter region must be null in REGION_MATCH_STRATEGY");
+            throw new IllegalArgumentException("Parameter region must not be null in REGION_MATCH_STRATEGY");
         }
         return prefixes.stream()
             .filter(prefix -> prefix.region().toLowerCase(Locale.getDefault()).startsWith(region.getValue().toLowerCase(Locale.getDefault())))

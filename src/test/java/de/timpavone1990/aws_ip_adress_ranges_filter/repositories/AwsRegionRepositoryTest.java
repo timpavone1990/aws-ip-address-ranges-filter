@@ -17,7 +17,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class AwsIpAddressRangesRepositoryTest {
+class AwsRegionRepositoryTest {
 
     @Mock
     private AwsIpAddressRangesClient client;
@@ -35,7 +35,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Test
     void testRegionFilterIsNull() {
-        final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
+        final var repository = new AwsRegionRepository(client, regionFilterStrategySupplier);
         final var ranges = repository.findRegions(null);
         assertThat(ranges).isNotNull();
         assertThat(ranges).hasSize(3);
@@ -43,7 +43,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Test
     void testRegionFilterAll() {
-        final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
+        final var repository = new AwsRegionRepository(client, regionFilterStrategySupplier);
         final var ranges = repository.findRegions(ALL);
         assertThat(ranges).isNotNull();
         assertThat(ranges).hasSize(3);
@@ -51,7 +51,7 @@ class AwsIpAddressRangesRepositoryTest {
 
     @Test
     void testRegionFilterEU() {
-        final var repository = new AwsIpAddressRangesRepository(client, regionFilterStrategySupplier);
+        final var repository = new AwsRegionRepository(client, regionFilterStrategySupplier);
         final var regions = repository.findRegions(EU);
         assertThat(regions).isNotNull();
         assertThat(regions).hasSize(2);

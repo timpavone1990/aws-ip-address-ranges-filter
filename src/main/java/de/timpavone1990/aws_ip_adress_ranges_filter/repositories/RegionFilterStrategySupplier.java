@@ -9,7 +9,7 @@ import static de.timpavone1990.aws_ip_adress_ranges_filter.repositories.RegionFi
 @Component
 public class RegionFilterStrategySupplier {
 
-    public RegionFilterStrategy provideRegionFilterStrategy(final RegionFilter region) {
+    public RegionFilterStrategy supplyRegionFilterStrategy(final RegionFilter region) {
         if (region == null) {
             return MATCH_ALL_STRATEGY;
         }

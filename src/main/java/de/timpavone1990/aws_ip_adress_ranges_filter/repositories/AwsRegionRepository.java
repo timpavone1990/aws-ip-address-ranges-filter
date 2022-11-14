@@ -14,13 +14,13 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.toSet;
 @Repository
-public class AwsIpAddressRangesRepository {
+public class AwsRegionRepository {
 
-    private final Logger logger = LoggerFactory.getLogger(AwsIpAddressRangesRepository.class);
+    private final Logger logger = LoggerFactory.getLogger(AwsRegionRepository.class);
     private final AwsIpAddressRangesClient client;
     private final RegionFilterStrategySupplier regionFilterStrategySupplier;
 
-    public AwsIpAddressRangesRepository(final AwsIpAddressRangesClient client, final RegionFilterStrategySupplier regionFilterStrategySupplier) {
+    public AwsRegionRepository(final AwsIpAddressRangesClient client, final RegionFilterStrategySupplier regionFilterStrategySupplier) {
         this.client = client;
         this.regionFilterStrategySupplier = regionFilterStrategySupplier;
     }
@@ -29,7 +29,7 @@ public class AwsIpAddressRangesRepository {
         logger.debug("Fetching AWS IP address ranges from the datasource");
         final var allPrefixes = client.getIpAddressRanges().prefixes();
         logger.debug("Fetched AWS IP address ranges from the datasource: {}", allPrefixes);
-        final var regionFilterStrategy = regionFilterStrategySupplier.provideRegionFilterStrategy(region);
+        final var regionFilterStrategy = regionFilterStrategySupplier.supplyRegionFilterStrategy(region);
         logger.debug("Using region filter strategy: {}", regionFilterStrategy.name());
         final var filteredPrefixes = regionFilterStrategy.apply(allPrefixes, region);
         final var ipPrefixesByRegion = filteredPrefixes.stream().collect(groupingBy(Prefix::region, mapping(Prefix::ipPrefix, toSet())));

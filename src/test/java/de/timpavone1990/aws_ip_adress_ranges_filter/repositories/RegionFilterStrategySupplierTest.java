@@ -17,17 +17,17 @@ class RegionFilterStrategySupplierTest {
 
     @Test
     void testRegionNull() {
-        assertThat(regionFilterStrategySupplier.provideRegionFilterStrategy(null)).isEqualTo(MATCH_ALL_STRATEGY);
+        assertThat(regionFilterStrategySupplier.supplyRegionFilterStrategy(null)).isEqualTo(MATCH_ALL_STRATEGY);
     }
 
     @Test
     void testRegionALL() {
-        assertThat(regionFilterStrategySupplier.provideRegionFilterStrategy(ALL)).isEqualTo(MATCH_ALL_STRATEGY);
+        assertThat(regionFilterStrategySupplier.supplyRegionFilterStrategy(ALL)).isEqualTo(MATCH_ALL_STRATEGY);
     }
 
     @ParameterizedTest
     @EnumSource(names = "ALL", mode = EXCLUDE)
     void testRegionsExceptAll(final RegionFilter region) {
-        assertThat(regionFilterStrategySupplier.provideRegionFilterStrategy(region)).isEqualTo(REGION_MATCH_STRATEGY);
+        assertThat(regionFilterStrategySupplier.supplyRegionFilterStrategy(region)).isEqualTo(REGION_MATCH_STRATEGY);
     }
 }

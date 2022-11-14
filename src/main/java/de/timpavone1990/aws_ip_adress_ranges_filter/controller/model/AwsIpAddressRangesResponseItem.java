@@ -13,14 +13,14 @@ public record AwsIpAddressRangesResponseItem(String region, String ipAddressRang
             throw new IllegalArgumentException("Parameter region must not be null");
         }
 
-        final var regionParts = region.code().split("-");
-        if (regionParts.length != 3) {
+        final var regionCodeParts = region.code().split("-");
+        if (regionCodeParts.length != 3) {
             throw new IllegalArgumentException("Region code " + region.code() + " has an unsupported format");
         }
 
-        final var firstRegionPartUppercase = regionParts[0].toUpperCase(Locale.getDefault());
+        final var firstRegionCodePartUppercase = regionCodeParts[0].toUpperCase(Locale.getDefault());
         return region.ipAddressRanges().stream()
-                .map(ipAddressRange -> new AwsIpAddressRangesResponseItem(firstRegionPartUppercase, ipAddressRange))
+                .map(ipAddressRange -> new AwsIpAddressRangesResponseItem(firstRegionCodePartUppercase, ipAddressRange))
                 .collect(Collectors.toSet());
     }
 

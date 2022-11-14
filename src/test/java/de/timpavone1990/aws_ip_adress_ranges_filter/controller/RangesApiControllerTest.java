@@ -1,7 +1,7 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.controller;
 
 import de.timpavone1990.aws_ip_adress_ranges_filter.model.Region;
-import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsIpAddressRangesRepository;
+import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsRegionRepository;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Set;
 
-import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -26,7 +25,7 @@ class RangesApiControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private AwsIpAddressRangesRepository repository;
+    private AwsRegionRepository repository;
 
     @Nested
     class FindAwsIpAddressRangesByRegion {
