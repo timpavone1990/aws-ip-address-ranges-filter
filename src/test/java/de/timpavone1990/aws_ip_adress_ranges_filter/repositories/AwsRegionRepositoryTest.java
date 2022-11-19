@@ -3,6 +3,7 @@ package de.timpavone1990.aws_ip_adress_ranges_filter.repositories;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesClient;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.AwsIpAddressRangesClientResponse;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.model.RegionCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -59,7 +60,7 @@ class AwsRegionRepositoryTest {
         final var regions = repository.findRegions(EU);
         assertThat(regions).isNotNull();
         assertThat(regions).hasSize(2);
-        assertThat(regions).allMatch(region -> region.code().startsWith("eu"));
+        assertThat(regions).allMatch(region -> region.code().name().startsWith("EU"));
     }
 
     @Test
@@ -77,13 +78,13 @@ class AwsRegionRepositoryTest {
 
         assertThat(regions).hasSize(35);
 
-        assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(EU_CENTRAL_1.getCode(), Set.of("52.219.170.0/23", "1.2.3.4/24", "4.5.6.7/26")));
-        assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(US_EAST_1.getCode(), Set.of("52.219.168.0/24", "1.2.3.4/24", "4.5.6.7/26")));
+        assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.EU_CENTRAL_1, Set.of("52.219.170.0/23", "1.2.3.4/24", "4.5.6.7/26")));
+        assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.US_EAST_1, Set.of("52.219.168.0/24", "1.2.3.4/24", "4.5.6.7/26")));
 
         de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.getRegionsExceptGlobal()
                 .stream()
                 .filter(region -> region != EU_CENTRAL_1 && region != US_EAST_1).forEach(region -> {
-                    assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(region.getCode(), Set.of("1.2.3.4/24", "4.5.6.7/26")));
+                    assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.findByRegionCode(region.getCode()), Set.of("1.2.3.4/24", "4.5.6.7/26")));
                 });
     }
 }

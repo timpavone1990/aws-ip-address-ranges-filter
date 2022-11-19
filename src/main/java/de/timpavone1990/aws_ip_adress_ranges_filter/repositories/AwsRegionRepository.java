@@ -4,6 +4,7 @@ import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesCl
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
 import de.timpavone1990.aws_ip_adress_ranges_filter.model.Region;
+import de.timpavone1990.aws_ip_adress_ranges_filter.model.RegionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
@@ -18,6 +19,7 @@ import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toSet;
+
 @Repository
 public class AwsRegionRepository {
 
@@ -43,7 +45,7 @@ public class AwsRegionRepository {
         final var filteredPrefixes = regionFilterStrategy.apply(expandedPrefixes, region);
 
         final var ipPrefixesByRegion = filteredPrefixes.stream().collect(groupingBy(Prefix::region, mapping(Prefix::ipPrefix, toSet())));
-        final var regions = ipPrefixesByRegion.entrySet().stream().map(entry -> new Region(entry.getKey().getCode(), entry.getValue())).collect(toSet());
+        final var regions = ipPrefixesByRegion.entrySet().stream().map(entry -> new Region(RegionCode.findByRegionCode(entry.getKey().getCode()), entry.getValue())).collect(toSet());
         logger.debug("Returning filtered regions: {}", regions);
         return regions;
     }
