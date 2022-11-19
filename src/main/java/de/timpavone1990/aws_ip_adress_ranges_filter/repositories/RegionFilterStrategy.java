@@ -8,14 +8,19 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.GLOBAL;
+
 public enum RegionFilterStrategy {
 
-    REGION_MATCH_STRATEGY((prefixes, region) -> {
-        if (region == null) {
-            throw new IllegalArgumentException("Parameter region must not be null in REGION_MATCH_STRATEGY");
+    REGION_MATCH_STRATEGY((prefixes, regionFilter) -> {
+        if (regionFilter == null) {
+            throw new IllegalArgumentException("Parameter regionFilter must not be null in REGION_MATCH_STRATEGY");
         }
+
         return prefixes.stream()
-            .filter(prefix -> prefix.region().getCode().toLowerCase(Locale.getDefault()).startsWith(region.getValue().toLowerCase(Locale.getDefault())))
+            .filter(prefix -> prefix.region() == GLOBAL ||
+                    prefix.region().getCode().toLowerCase(Locale.getDefault())
+                            .startsWith(regionFilter.getValue().toLowerCase(Locale.getDefault())))
             .collect(Collectors.toSet());
     }),
 
