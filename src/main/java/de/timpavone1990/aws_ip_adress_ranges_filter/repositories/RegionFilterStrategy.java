@@ -3,12 +3,12 @@ package de.timpavone1990.aws_ip_adress_ranges_filter.repositories;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
 
-import java.util.Locale;
 import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.GLOBAL;
+import static java.util.Locale.ROOT;
 
 public enum RegionFilterStrategy {
 
@@ -19,8 +19,8 @@ public enum RegionFilterStrategy {
 
         return prefixes.stream()
             .filter(prefix -> prefix.region() == GLOBAL ||
-                    prefix.region().getCode().toLowerCase(Locale.getDefault())
-                            .startsWith(regionFilter.getValue().toLowerCase(Locale.getDefault())))
+                    prefix.region().getCode().toLowerCase(ROOT)
+                            .startsWith(regionFilter.getValue().toLowerCase(ROOT)))
             .collect(Collectors.toSet());
     }),
 

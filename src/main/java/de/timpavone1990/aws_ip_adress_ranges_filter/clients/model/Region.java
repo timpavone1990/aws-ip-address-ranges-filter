@@ -3,9 +3,10 @@ package de.timpavone1990.aws_ip_adress_ranges_filter.clients.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Arrays;
-import java.util.Locale;
 import java.util.Set;
 import java.util.stream.Collectors;
+
+import static java.util.Locale.ROOT;
 
 public enum Region {
     GLOBAL,
@@ -50,7 +51,7 @@ public enum Region {
             .filter(region -> region != GLOBAL).collect(Collectors.toSet());
 
     Region() {
-        this.code = this.name().toLowerCase(Locale.getDefault()).replaceAll("_", "-");
+        this.code = this.name().toLowerCase(ROOT).replaceAll("_", "-");
     }
 
     public String getCode() {
