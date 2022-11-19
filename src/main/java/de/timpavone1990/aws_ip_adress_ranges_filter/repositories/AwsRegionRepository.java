@@ -45,7 +45,9 @@ public class AwsRegionRepository {
         final var filteredPrefixes = regionFilterStrategy.apply(expandedPrefixes, region);
 
         final var ipPrefixesByRegion = filteredPrefixes.stream().collect(groupingBy(Prefix::region, mapping(Prefix::ipPrefix, toSet())));
-        final var regions = ipPrefixesByRegion.entrySet().stream().map(entry -> new Region(RegionCode.findByRegionCode(entry.getKey().getCode()), entry.getValue())).collect(toSet());
+        final var regions = ipPrefixesByRegion.entrySet().stream()
+                .map(entry -> new Region(RegionCode.findByRegionCode(entry.getKey().getCode()), entry.getValue()))
+                .collect(toSet());
         logger.debug("Returning filtered regions: {}", regions);
         return regions;
     }

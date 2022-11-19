@@ -51,7 +51,7 @@ public enum RegionCode {
             .filter(region -> region != GLOBAL).collect(Collectors.toSet());
 
     RegionCode() {
-        this.code = this.name().toLowerCase(ROOT).replaceAll("_", "-");
+        code = name().toLowerCase(ROOT).replaceAll("_", "-");
     }
 
     public String getCode() {
