@@ -10,10 +10,10 @@ import org.junit.jupiter.params.provider.NullSource;
 
 import java.util.Set;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.EU_CENTRAL_1;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.EU_CENTRAL_2;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.GLOBAL;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.US_EAST_1;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_1;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_2;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.US_EAST_1;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.EU;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.US;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.repositories.RegionFilterStrategy.MATCH_ALL_STRATEGY;

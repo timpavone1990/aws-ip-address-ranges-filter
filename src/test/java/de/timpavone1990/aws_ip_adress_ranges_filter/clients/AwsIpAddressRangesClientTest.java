@@ -11,7 +11,7 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.*;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.*;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;

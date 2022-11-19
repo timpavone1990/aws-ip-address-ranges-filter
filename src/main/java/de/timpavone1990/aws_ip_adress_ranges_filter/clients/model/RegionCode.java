@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 import static java.util.Locale.ROOT;
 
-public enum Region {
+public enum RegionCode {
     GLOBAL,
     @JsonProperty("af-south-1") AF_SOUTH_1,
     @JsonProperty("ap-east-1") AP_EAST_1,
@@ -47,10 +47,10 @@ public enum Region {
     @JsonProperty("us-west-2") US_WEST_2;
 
     private final String code;
-    private static Set<Region> regionsExceptGlobal = Arrays.stream(de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.values())
+    private final static Set<RegionCode> regionsExceptGlobal = Arrays.stream(RegionCode.values())
             .filter(region -> region != GLOBAL).collect(Collectors.toSet());
 
-    Region() {
+    RegionCode() {
         this.code = this.name().toLowerCase(ROOT).replaceAll("_", "-");
     }
 
@@ -58,7 +58,7 @@ public enum Region {
         return code;
     }
 
-    public static Set<Region> getRegionsExceptGlobal() {
+    public static Set<RegionCode> getRegionsExceptGlobal() {
         return regionsExceptGlobal;
     }
 }

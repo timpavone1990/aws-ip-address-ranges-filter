@@ -7,7 +7,7 @@ import java.util.Set;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.GLOBAL;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
 import static java.util.Locale.ROOT;
 
 public enum RegionFilterStrategy {

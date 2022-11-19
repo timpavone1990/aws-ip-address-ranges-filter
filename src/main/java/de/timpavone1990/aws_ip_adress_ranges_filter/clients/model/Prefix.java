@@ -4,6 +4,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record Prefix(
     @JsonProperty("ip_prefix") String ipPrefix,
-    Region region
+    RegionCode region
 ) {
 }

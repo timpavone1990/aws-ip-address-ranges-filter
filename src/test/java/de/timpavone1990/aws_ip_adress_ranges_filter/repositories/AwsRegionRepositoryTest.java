@@ -12,10 +12,10 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.EU_CENTRAL_1;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.EU_CENTRAL_2;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.GLOBAL;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.US_EAST_1;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_1;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_2;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.US_EAST_1;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.ALL;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.EU;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -81,7 +81,7 @@ class AwsRegionRepositoryTest {
         assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.EU_CENTRAL_1, Set.of("52.219.170.0/23", "1.2.3.4/24", "4.5.6.7/26")));
         assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.US_EAST_1, Set.of("52.219.168.0/24", "1.2.3.4/24", "4.5.6.7/26")));
 
-        de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.getRegionsExceptGlobal()
+        de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal()
                 .stream()
                 .filter(region -> region != EU_CENTRAL_1 && region != US_EAST_1).forEach(region -> {
                     assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.findByRegionCode(region.getCode()), Set.of("1.2.3.4/24", "4.5.6.7/26")));

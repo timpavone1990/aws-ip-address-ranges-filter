@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.GLOBAL;
+import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.partitioningBy;
@@ -54,7 +54,7 @@ public class AwsRegionRepository {
         final Map<Boolean, List<Prefix>> globalAndLocalPrefixes = prefixes.stream().collect(partitioningBy(prefix -> prefix.region().equals(GLOBAL)));
         final HashSet<Prefix> expandedPrefixes = new HashSet<>(globalAndLocalPrefixes.get(false));
 
-        de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Region.getRegionsExceptGlobal()
+        de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal()
             .forEach(region -> {
                 globalAndLocalPrefixes.get(true).forEach(globalPrefix -> {
                     expandedPrefixes.add(new Prefix(globalPrefix.ipPrefix(), region));
