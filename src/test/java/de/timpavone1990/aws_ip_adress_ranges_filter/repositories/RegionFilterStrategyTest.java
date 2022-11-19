@@ -32,7 +32,7 @@ class RegionFilterStrategyTest {
 
         @ParameterizedTest
         @NullSource
-        @EnumSource(names = "ALL" )
+        @EnumSource
         void testStrategy(final RegionFilter region) {
             assertThat(MATCH_ALL_STRATEGY.apply(prefixes, region)).isEqualTo(prefixes);
         }
