@@ -1,6 +1,5 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.controller;
 
-import de.timpavone1990.aws_ip_adress_ranges_filter.controller.model.AwsIpAddressRangesResponse;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.api.RangesApi;
 import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.repositories.AwsRegionRepository;
@@ -26,18 +25,20 @@ public class RangesApiController implements RangesApi {
 
     private final Logger logger = LoggerFactory.getLogger(RangesApiController.class);
     private final AwsRegionRepository awsRegionRepository;
+    private final AwsIpAddressRangesResponseRenderer responseRenderer;
 
-    public RangesApiController(final AwsRegionRepository awsRegionRepository) {
+    public RangesApiController(final AwsRegionRepository awsRegionRepository, final AwsIpAddressRangesResponseRenderer responseRenderer) {
         this.awsRegionRepository = awsRegionRepository;
+        this.responseRenderer = responseRenderer;
     }
 
     @Override
     public ResponseEntity<String> findAwsIpAddressRangesByRegion(final RegionFilter regionFilter) {
         logger.info("Collecting ip address ranges for regionFilter={}", regionFilter);
         final var regions = awsRegionRepository.findRegions(regionFilter);
-        final var response = AwsIpAddressRangesResponse.fromRegions(regions);
+        final var response = responseRenderer.renderRegions(regions);
         logger.debug("Collected ip address ranges for regionFilter={}: {}", regionFilter, response);
-        return ResponseEntity.of(Optional.of(response + "\n"));
+        return ResponseEntity.of(Optional.of(response));
     }
 
     @ExceptionHandler(MethodArgumentTypeMismatchException.class)
