@@ -15,6 +15,7 @@ import java.util.Map;
 import java.util.Set;
 
 import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
+import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
 import static java.util.stream.Collectors.partitioningBy;
@@ -54,15 +55,14 @@ public class AwsRegionRepository {
 
     private Set<Prefix> expandGlobalPrefixes(final Set<Prefix> prefixes) {
         final Map<Boolean, List<Prefix>> globalAndLocalPrefixes = prefixes.stream().collect(partitioningBy(prefix -> prefix.region().equals(GLOBAL)));
-        final HashSet<Prefix> expandedPrefixes = new HashSet<>(globalAndLocalPrefixes.get(false));
+        final List<Prefix> localPrefixes = globalAndLocalPrefixes.get(false);
+        final List<Prefix> globalPrefixes = globalAndLocalPrefixes.get(true);
 
-        de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal()
-            .forEach(region -> {
-                globalAndLocalPrefixes.get(true).forEach(globalPrefix -> {
-                    expandedPrefixes.add(new Prefix(globalPrefix.ipPrefix(), region));
-                });
-            });
-
-        return expandedPrefixes;
+        return de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal()
+                .stream().flatMap(region -> globalPrefixes.stream().map(globalPrefix -> new Prefix(globalPrefix.ipPrefix(), region)))
+                .collect(collectingAndThen(toSet(), result -> {
+                    result.addAll(localPrefixes);
+                    return result;
+                }));
     }
 }
