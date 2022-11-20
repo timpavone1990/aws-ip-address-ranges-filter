@@ -39,6 +39,7 @@ dependencies {
     implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
     implementation("io.micrometer:micrometer-core:1.10.0")
     implementation("io.github.openfeign:feign-micrometer:12.0")
+    implementation("com.fasterxml.jackson.module:jackson-module-afterburner:2.14.0")
 
     testImplementation("org.junit.jupiter:junit-jupiter:5.9.0")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
