@@ -15,7 +15,11 @@ public class AwsIpAddressRangesResponseRenderer {
             throw new IllegalArgumentException("Parameter regions must not be null.");
         }
 
-        final StringBuilder responseBuilder = new StringBuilder(MAX_RESPONSE_LINE_LENGTH * regions.size());
+        final var numberOfLines = regions.stream()
+                .map(region -> region.ipAddressRanges().size())
+                .reduce(Integer::sum)
+                .orElse(0);
+        final var responseBuilder = new StringBuilder(MAX_RESPONSE_LINE_LENGTH * numberOfLines);
 
         for (Region region : regions) {
             for (String ipAddressRange : region.ipAddressRanges()) {
