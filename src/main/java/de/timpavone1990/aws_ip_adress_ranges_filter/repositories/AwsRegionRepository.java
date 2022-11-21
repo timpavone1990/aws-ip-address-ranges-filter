@@ -9,15 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
-import static java.util.stream.Collectors.collectingAndThen;
 import static java.util.stream.Collectors.groupingBy;
 import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.partitioningBy;
 import static java.util.stream.Collectors.toSet;
 
 @Repository
@@ -34,17 +31,16 @@ public class AwsRegionRepository {
 
     public Set<Region> findRegions(final RegionFilter region) {
         logger.debug("Fetching AWS IP address ranges from the datasource");
-        final var allPrefixes = client.getIpAddressRanges().getAllPrefixes().collect(toSet());
-        logger.debug("Fetched AWS IP address ranges from the datasource: {}", allPrefixes);
+        final var allPrefixes = client.getIpAddressRanges().getAllPrefixes();
 
+        logger.debug("Expanding global prefixes");
         final var expandedPrefixes = expandGlobalPrefixes(allPrefixes);
-        logger.debug("Expanded global prefixes. Final prefixes: {}", expandedPrefixes);
 
         final var regionFilterStrategy = regionFilterStrategySupplier.supplyRegionFilterStrategy(region);
         logger.debug("Using region filter strategy: {}", regionFilterStrategy.name());
         final var filteredPrefixes = regionFilterStrategy.apply(expandedPrefixes, region);
 
-        final var ipPrefixesByRegion = filteredPrefixes.stream().collect(groupingBy(Prefix::region, mapping(Prefix::ipPrefix, toSet())));
+        final var ipPrefixesByRegion = filteredPrefixes.collect(groupingBy(Prefix::region, mapping(Prefix::ipPrefix, toSet())));
         final var regions = ipPrefixesByRegion.entrySet().stream()
                 .map(entry -> new Region(RegionCode.findByRegionCode(entry.getKey().getCode()), entry.getValue()))
                 .collect(toSet());
@@ -52,16 +48,11 @@ public class AwsRegionRepository {
         return regions;
     }
 
-    private Set<Prefix> expandGlobalPrefixes(final Set<Prefix> prefixes) {
-        final Map<Boolean, List<Prefix>> globalAndLocalPrefixes = prefixes.stream().collect(partitioningBy(prefix -> prefix.region().equals(GLOBAL)));
-        final List<Prefix> localPrefixes = globalAndLocalPrefixes.get(false);
-        final List<Prefix> globalPrefixes = globalAndLocalPrefixes.get(true);
-
-        return de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal()
-                .stream().flatMap(region -> globalPrefixes.stream().map(globalPrefix -> globalPrefix.withRegionCode(region)))
-                .collect(collectingAndThen(toSet(), result -> {
-                    result.addAll(localPrefixes);
-                    return result;
-                }));
+    private Stream<Prefix> expandGlobalPrefixes(final Stream<Prefix> prefixes) {
+        return prefixes.flatMap(prefix ->
+                GLOBAL != prefix.region()
+                        ? Stream.of(prefix)
+                        : de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal().stream().map(prefix::withRegionCode)
+        );
     }
 }
