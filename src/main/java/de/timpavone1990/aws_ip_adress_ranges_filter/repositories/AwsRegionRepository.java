@@ -1,15 +1,14 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.repositories;
 
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesClient;
-import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.model.Region;
 import de.timpavone1990.aws_ip_adress_ranges_filter.model.RegionCode;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -35,7 +34,7 @@ public class AwsRegionRepository {
 
     public Set<Region> findRegions(final RegionFilter region) {
         logger.debug("Fetching AWS IP address ranges from the datasource");
-        final var allPrefixes = client.getIpAddressRanges().prefixes();
+        final var allPrefixes = client.getIpAddressRanges().getAllPrefixes().collect(toSet());
         logger.debug("Fetched AWS IP address ranges from the datasource: {}", allPrefixes);
 
         final var expandedPrefixes = expandGlobalPrefixes(allPrefixes);
@@ -59,7 +58,7 @@ public class AwsRegionRepository {
         final List<Prefix> globalPrefixes = globalAndLocalPrefixes.get(true);
 
         return de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal()
-                .stream().flatMap(region -> globalPrefixes.stream().map(globalPrefix -> new Prefix(globalPrefix.ipPrefix(), region)))
+                .stream().flatMap(region -> globalPrefixes.stream().map(globalPrefix -> globalPrefix.withRegionCode(region)))
                 .collect(collectingAndThen(toSet(), result -> {
                     result.addAll(localPrefixes);
                     return result;

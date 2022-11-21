@@ -1,7 +1,8 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.repositories;
 
-import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter;
+import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.IpV4Prefix;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -24,10 +25,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class RegionFilterStrategyTest {
 
     private final Set<Prefix> prefixes = Set.of(
-            new Prefix("52.219.170.0/23", EU_CENTRAL_1),
-            new Prefix("52.219.160.0/23", EU_CENTRAL_2),
-            new Prefix("52.219.168.0/24", US_EAST_1),
-            new Prefix("1.2.4.5/21", GLOBAL)
+            new IpV4Prefix("52.219.170.0/23", EU_CENTRAL_1),
+            new IpV4Prefix("52.219.160.0/23", EU_CENTRAL_2),
+            new IpV4Prefix("52.219.168.0/24", US_EAST_1),
+            new IpV4Prefix("1.2.4.5/21", GLOBAL)
     );
 
     @Nested

@@ -1,7 +1,7 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.clients;
 
 import com.github.tomakehurst.wiremock.client.WireMock;
-import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.Prefix;
+import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.IpV4Prefix;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.http.HttpMessageConvertersAutoConfiguration;
@@ -80,9 +80,9 @@ class AwsIpAddressRangesClientTest {
         assertThat(prefixes).isNotNull();
         assertThat(prefixes).as("Check the amount of prefixes in the AWS IP address ranges.").hasSize(3);
         assertThat(prefixes).containsExactlyInAnyOrder(
-            new Prefix("3.2.34.0/26", AF_SOUTH_1),
-            new Prefix("3.5.140.0/22", AP_NORTHEAST_2),
-            new Prefix("13.34.37.64/27", AP_SOUTHEAST_4)
+            new IpV4Prefix("3.2.34.0/26", AF_SOUTH_1),
+            new IpV4Prefix("3.5.140.0/22", AP_NORTHEAST_2),
+            new IpV4Prefix("13.34.37.64/27", AP_SOUTHEAST_4)
         );
     }
 

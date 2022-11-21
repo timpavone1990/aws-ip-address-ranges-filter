@@ -1,9 +1,9 @@
 package de.timpavone1990.aws_ip_adress_ranges_filter.clients.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+public interface Prefix {
 
-public record Prefix(
-    @JsonProperty("ip_prefix") String ipPrefix,
-    RegionCode region
-) {
+    String ipPrefix();
+    RegionCode region();
+
+    Prefix withRegionCode(RegionCode regionCode);
 }

@@ -22,7 +22,7 @@ class AwsIpAddressRangesFilterApplicationTest {
 
         final var body = responseEntity.getBody();
         assertThat(body).isNotBlank();
-        assertThat(body.lines()).allMatch(line -> line.matches("^(.{2} \\d{1,3}\\.\\d{1,3}.\\d{1,3}.\\d{1,3}/\\d{1,2})$"));
+        assertThat(body.lines()).allMatch(line -> line.matches("^(.{2} (.*?)/\\d{1,3})$"));
     }
 
     @Test
@@ -32,6 +32,6 @@ class AwsIpAddressRangesFilterApplicationTest {
 
         final var body = responseEntity.getBody();
         assertThat(body).isNotBlank();
-        assertThat(body.lines()).allMatch(line -> line.matches("^(EU \\d{1,3}\\.\\d{1,3}.\\d{1,3}.\\d{1,3}/\\d{1,2})$"));
+        assertThat(body.lines()).allMatch(line -> line.matches("^(EU (.*?)/\\d{1,3})$"));
     }
 }
