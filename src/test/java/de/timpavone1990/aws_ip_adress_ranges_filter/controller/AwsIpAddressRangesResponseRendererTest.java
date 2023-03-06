@@ -11,7 +11,7 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 
 class AwsIpAddressRangesResponseRendererTest {
 
-    final AwsIpAddressRangesResponseRenderer renderer = new AwsIpAddressRangesResponseRenderer();
+    final AwsIpAddressRangesResponseRenderer renderer = new AwsIpAddressRangesResponseRenderer(new AwsIpAddressRangesResponseRenderer.StringBuilderFactory());
 
     @Test
     void testNull() {

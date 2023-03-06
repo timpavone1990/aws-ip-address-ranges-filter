@@ -8,18 +8,18 @@ import java.util.Set;
 @Component
 public class AwsIpAddressRangesResponseRenderer {
 
-    private final static int MAX_RESPONSE_LINE_LENGTH = 21; // EU 123.123.123.123/11
+    private final StringBuilderFactory stringBuilderFactory;
+
+    public AwsIpAddressRangesResponseRenderer(final StringBuilderFactory stringBuilderFactory) {
+        this.stringBuilderFactory = stringBuilderFactory;
+    }
 
     public String renderRegions(final Set<Region> regions) {
         if (regions == null) {
             throw new IllegalArgumentException("Parameter regions must not be null.");
         }
 
-        final var numberOfLines = regions.stream()
-                .map(region -> region.ipAddressRanges().size())
-                .reduce(Integer::sum)
-                .orElse(0);
-        final var responseBuilder = new StringBuilder(MAX_RESPONSE_LINE_LENGTH * numberOfLines);
+        final var responseBuilder = stringBuilderFactory.createStringBuilder(regions);
 
         for (Region region : regions) {
             for (String ipAddressRange : region.ipAddressRanges()) {
@@ -31,5 +31,18 @@ public class AwsIpAddressRangesResponseRenderer {
         }
 
         return responseBuilder.toString();
+    }
+
+    @Component
+    public static class StringBuilderFactory {
+        private final static int MAX_RESPONSE_LINE_LENGTH = 21; // EU 123.123.123.123/11
+
+        public StringBuilder createStringBuilder(final Set<Region> regions) {
+            final var numberOfLines = regions.stream()
+                    .map(region -> region.ipAddressRanges().size())
+                    .reduce(Integer::sum)
+                    .orElse(0);
+            return new StringBuilder(MAX_RESPONSE_LINE_LENGTH * numberOfLines);
+        }
     }
 }
