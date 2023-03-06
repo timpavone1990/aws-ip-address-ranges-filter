@@ -35,7 +35,7 @@ public class AwsIpAddressRangesResponseRenderer {
 
     @Component
     public static class StringBuilderFactory {
-        private final static int MAX_RESPONSE_LINE_LENGTH = 21; // EU 123.123.123.123/11
+        private final static int MAX_RESPONSE_LINE_LENGTH = 22; // EU 123.123.123.123/11\n
 
         public StringBuilder createStringBuilder(final Set<Region> regions) {
             final var numberOfLines = regions.stream()
