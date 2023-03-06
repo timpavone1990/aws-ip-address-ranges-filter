@@ -13,8 +13,8 @@ public class StringBuilderFactoryTest {
     @Test
     void createStringBuilderWithAdequateCapacity() {
         final var regions = Set.of(
-                new Region(EU_CENTRAL_1, Set.of("111.222.333.444/11", "111.222.333.555/12")),
-                new Region(EU_CENTRAL_2, Set.of("111.222.333.666/13"))
+                new Region(EU_CENTRAL_1, Set.of("1234:5678:90AB:CDEF:1234:5678:90AB:AAAA/128")),
+                new Region(EU_CENTRAL_2, Set.of("1234:5678:90AB:CDEF:1234:5678:90AB:0000/128", "1234:5678:90AB:CDEF:1234:5678:90AB:CDEF/128"))
         );
         final var stringBuilderFactory = new AwsIpAddressRangesResponseRenderer.StringBuilderFactory();
         final var awsIpAddressRangesResponseRenderer = new AwsIpAddressRangesResponseRenderer(stringBuilderFactory);
