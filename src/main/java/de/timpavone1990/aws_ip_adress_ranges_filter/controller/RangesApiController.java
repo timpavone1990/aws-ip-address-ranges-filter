@@ -34,7 +34,7 @@ public class RangesApiController implements RangesApi {
 
     @Override
     public ResponseEntity<String> findAwsIpAddressRangesByRegion(final RegionFilter regionFilter) {
-        logger.info("Collecting ip address ranges for regionFilter={}", regionFilter);
+        logger.info("Client requested ip address ranges with regionFilter={}.", regionFilter);
         final var regions = awsRegionRepository.findRegions(regionFilter);
         final var response = responseRenderer.renderRegions(regions);
         logger.debug("Collected ip address ranges for regionFilter={}: {}", regionFilter, response);

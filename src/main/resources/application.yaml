@@ -25,3 +25,6 @@ feign:
       default:
         connectTimeout: 500
         readTimeout: 500
+logging:
+  level:
+    de.timpavone1990.aws_ip_adress_ranges_filter.controller.AwsIpAddressRangesResponseRenderer: DEBUG
