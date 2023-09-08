@@ -12,9 +12,6 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import java.util.Set;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.model.RegionCode.EU_CENTRAL_1;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.model.RegionCode.EU_CENTRAL_2;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.model.RegionCode.US_EAST_1;
 import static org.hamcrest.Matchers.containsString;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -38,9 +35,9 @@ class RangesApiControllerTest {
         @Test
         void testIpAddressRangesResponseBodyFormat() throws Exception {
             final var regions = Set.of(
-                    new Region(EU_CENTRAL_1, Set.of("52.219.170.0/23")),
-                    new Region(EU_CENTRAL_2, Set.of("52.219.160.0/23")),
-                    new Region(US_EAST_1, Set.of("52.219.168.0/24"))
+                    new Region("eu-central-1", Set.of("52.219.170.0/23")),
+                    new Region("eu-central-2", Set.of("52.219.160.0/23")),
+                    new Region("us-east-1", Set.of("52.219.168.0/24"))
             );
             when(repository.findRegions(any())).thenReturn(regions);
             mockMvc.perform(get("/v1/aws/ip-address-ranges?region=ALL"))

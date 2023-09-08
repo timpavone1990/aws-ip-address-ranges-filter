@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
+import static java.util.Locale.ROOT;
+
 @Component
 public class AwsIpAddressRangesResponseRenderer {
 
@@ -23,7 +25,7 @@ public class AwsIpAddressRangesResponseRenderer {
 
         for (Region region : regions) {
             for (String ipAddressRange : region.ipAddressRanges()) {
-                responseBuilder.append(region.code().getCodeFirstPartUpperCase());
+                responseBuilder.append(region.code().toUpperCase(ROOT), 0, 2);
                 responseBuilder.append(" ");
                 responseBuilder.append(ipAddressRange);
                 responseBuilder.append("\n");

@@ -4,7 +4,6 @@ import de.timpavone1990.aws_ip_adress_ranges_filter.clients.AwsIpAddressRangesCl
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.AwsIpAddressRangesClientResponse;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.IpV4Prefix;
 import de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.IpV6Prefix;
-import de.timpavone1990.aws_ip_adress_ranges_filter.model.RegionCode;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -62,7 +61,7 @@ class AwsRegionRepositoryTest {
         final var regions = repository.findRegions(EU);
         assertThat(regions).isNotNull();
         assertThat(regions).hasSize(2);
-        assertThat(regions).allMatch(region -> region.code().name().startsWith("EU"));
+        assertThat(regions).allMatch(region -> region.code().startsWith("eu"));
     }
 
     @Test
@@ -88,8 +87,8 @@ class AwsRegionRepositoryTest {
         assertThat(regions).hasSize(2);
 
         assertThat(regions).contains(
-                new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.EU_CENTRAL_1, Set.of("52.219.170.0/23", "1.2.3.4/24", "4.5.6.7/26", "2600:1ff2:4000::/40", "2600:1f69:e0c0::/46", "240f:80f8:4000::/40")),
-                new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.US_EAST_1, Set.of("52.219.168.0/24", "1.2.3.4/24", "4.5.6.7/26", "2a05:d07a:a000::/40", "2600:1f69:e0c0::/46", "240f:80f8:4000::/40"))
+                new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region("eu-central-1", Set.of("52.219.170.0/23", "1.2.3.4/24", "4.5.6.7/26", "2600:1ff2:4000::/40", "2600:1f69:e0c0::/46", "240f:80f8:4000::/40")),
+                new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region("us-east-1", Set.of("52.219.168.0/24", "1.2.3.4/24", "4.5.6.7/26", "2a05:d07a:a000::/40", "2600:1f69:e0c0::/46", "240f:80f8:4000::/40"))
         );
     }
 }
