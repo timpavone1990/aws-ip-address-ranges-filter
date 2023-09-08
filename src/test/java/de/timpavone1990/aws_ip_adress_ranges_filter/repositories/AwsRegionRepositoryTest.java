@@ -13,10 +13,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Set;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_1;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_2;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.US_EAST_1;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.ALL;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.EU;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -32,13 +28,13 @@ class AwsRegionRepositoryTest {
     @BeforeEach
     void setUp() {
         final var ipV4Prefixes = Set.of(
-                new IpV4Prefix("52.219.170.0/23", EU_CENTRAL_1.getCode()),
-                new IpV4Prefix("52.219.160.0/23", EU_CENTRAL_2.getCode()),
-                new IpV4Prefix("52.219.168.0/24", US_EAST_1.getCode())
+                new IpV4Prefix("52.219.170.0/23", "eu-central-1"),
+                new IpV4Prefix("52.219.160.0/23", "eu-central-2"),
+                new IpV4Prefix("52.219.168.0/24", "us-east-1")
         );
         final var ipV6Prefixes = Set.of(
-                new IpV6Prefix("2600:1ff2:4000::/40", EU_CENTRAL_1.getCode()),
-                new IpV6Prefix("2a05:d07a:a000::/40", US_EAST_1.getCode())
+                new IpV6Prefix("2600:1ff2:4000::/40", "eu-central-1"),
+                new IpV6Prefix("2a05:d07a:a000::/40", "us-east-1")
         );
         final var awsIpAddressRanges = new AwsIpAddressRangesClientResponse(ipV4Prefixes, ipV6Prefixes);
         when(client.getIpAddressRanges()).thenReturn(awsIpAddressRanges);
@@ -72,16 +68,16 @@ class AwsRegionRepositoryTest {
     @Test
     void testExpandGlobalRegion() {
         final var ipV4Prefixes = Set.of(
-                new IpV4Prefix("52.219.170.0/23", EU_CENTRAL_1.getCode()),
-                new IpV4Prefix("52.219.168.0/24", US_EAST_1.getCode()),
-                new IpV4Prefix("1.2.3.4/24", GLOBAL.getCode()),
-                new IpV4Prefix("4.5.6.7/26", GLOBAL.getCode())
+                new IpV4Prefix("52.219.170.0/23", "eu-central-1"),
+                new IpV4Prefix("52.219.168.0/24", "us-east-1"),
+                new IpV4Prefix("1.2.3.4/24", "GLOBAL"),
+                new IpV4Prefix("4.5.6.7/26", "GLOBAL")
         );
         final var ipV6Prefixes = Set.of(
-                new IpV6Prefix("2600:1ff2:4000::/40", EU_CENTRAL_1.getCode()),
-                new IpV6Prefix("2a05:d07a:a000::/40", US_EAST_1.getCode()),
-                new IpV6Prefix("2600:1f69:e0c0::/46", GLOBAL.getCode()),
-                new IpV6Prefix("240f:80f8:4000::/40", GLOBAL.getCode())
+                new IpV6Prefix("2600:1ff2:4000::/40", "eu-central-1"),
+                new IpV6Prefix("2a05:d07a:a000::/40", "us-east-1"),
+                new IpV6Prefix("2600:1f69:e0c0::/46", "GLOBAL"),
+                new IpV6Prefix("240f:80f8:4000::/40", "GLOBAL")
         );
         final var awsIpAddressRanges = new AwsIpAddressRangesClientResponse(ipV4Prefixes, ipV6Prefixes);
         when(client.getIpAddressRanges()).thenReturn(awsIpAddressRanges);

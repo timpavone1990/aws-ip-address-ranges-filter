@@ -12,7 +12,6 @@ import org.springframework.stereotype.Repository;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
 import static java.util.stream.Collectors.*;
 
 @Repository

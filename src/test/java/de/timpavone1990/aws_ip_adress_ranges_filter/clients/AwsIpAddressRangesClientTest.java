@@ -11,7 +11,6 @@ import org.springframework.cloud.openfeign.FeignAutoConfiguration;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.*;
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -80,9 +79,9 @@ class AwsIpAddressRangesClientTest {
         assertThat(prefixes).isNotNull();
         assertThat(prefixes).as("Check the amount of prefixes in the AWS IP address ranges.").hasSize(3);
         assertThat(prefixes).containsExactlyInAnyOrder(
-            new IpV4Prefix("3.2.34.0/26", AF_SOUTH_1.getCode()),
-            new IpV4Prefix("3.5.140.0/22", AP_NORTHEAST_2.getCode()),
-            new IpV4Prefix("13.34.37.64/27", AP_SOUTHEAST_4.getCode())
+            new IpV4Prefix("3.2.34.0/26", "af-south-1"),
+            new IpV4Prefix("3.5.140.0/22", "ap-northeast-2"),
+            new IpV4Prefix("13.34.37.64/27", "ap-southeast-4")
         );
     }
 

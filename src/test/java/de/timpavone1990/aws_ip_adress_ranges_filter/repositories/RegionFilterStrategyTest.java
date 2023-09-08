@@ -13,10 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_1;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.EU_CENTRAL_2;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
-import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.US_EAST_1;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.EU;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.generated.model.RegionFilter.US;
 import static de.timpavone1990.aws_ip_adress_ranges_filter.repositories.RegionFilterStrategy.MATCH_ALL_STRATEGY;
@@ -27,10 +23,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class RegionFilterStrategyTest {
 
     private final Stream<Prefix> prefixes = Stream.of(
-            new IpV4Prefix("52.219.170.0/23", EU_CENTRAL_1.getCode()),
-            new IpV4Prefix("52.219.160.0/23", EU_CENTRAL_2.getCode()),
-            new IpV4Prefix("52.219.168.0/24", US_EAST_1.getCode()),
-            new IpV4Prefix("1.2.4.5/21", GLOBAL.getCode())
+            new IpV4Prefix("52.219.170.0/23", "eu-central-1"),
+            new IpV4Prefix("52.219.160.0/23", "eu-central-2"),
+            new IpV4Prefix("52.219.168.0/24", "us-east-1"),
+            new IpV4Prefix("1.2.4.5/21", "GLOBAL")
     );
 
     @Nested
