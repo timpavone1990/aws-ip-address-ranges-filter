@@ -40,14 +40,14 @@ public class AwsRegionRepository {
 
         final var ipPrefixesByRegion = filteredPrefixes.collect(groupingBy(Prefix::region, mapping(Prefix::ipPrefix, toSet())));
         final var regions = ipPrefixesByRegion.entrySet().stream()
-                .map(entry -> new Region(RegionCode.findByRegionCode(entry.getKey().getCode()), entry.getValue()))
+                .map(entry -> new Region(RegionCode.findByRegionCode(entry.getKey()), entry.getValue()))
                 .collect(toSet());
         logger.debug("Returning filtered regions: {}", regions);
         return regions;
     }
 
     private Stream<Prefix> expandGlobalPrefixes(final Stream<Prefix> prefixes) {
-        final var globalAndRegionalPrefixes = prefixes.collect(partitioningBy(prefix -> "GLOBAL".equalsIgnoreCase(prefix.region().getCode())));
+        final var globalAndRegionalPrefixes = prefixes.collect(partitioningBy(prefix -> "GLOBAL".equalsIgnoreCase(prefix.region())));
         final var globalPrefixes = globalAndRegionalPrefixes.get(true);
         final var regionalPrefixes = globalAndRegionalPrefixes.get(false);
         final var uniqueRegions = regionalPrefixes.stream().map(Prefix::region).collect(toSet());

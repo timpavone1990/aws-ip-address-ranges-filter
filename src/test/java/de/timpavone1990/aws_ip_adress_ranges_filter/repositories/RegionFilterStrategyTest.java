@@ -27,10 +27,10 @@ import static org.assertj.core.api.Assertions.assertThatThrownBy;
 class RegionFilterStrategyTest {
 
     private final Stream<Prefix> prefixes = Stream.of(
-            new IpV4Prefix("52.219.170.0/23", EU_CENTRAL_1),
-            new IpV4Prefix("52.219.160.0/23", EU_CENTRAL_2),
-            new IpV4Prefix("52.219.168.0/24", US_EAST_1),
-            new IpV4Prefix("1.2.4.5/21", GLOBAL)
+            new IpV4Prefix("52.219.170.0/23", EU_CENTRAL_1.getCode()),
+            new IpV4Prefix("52.219.160.0/23", EU_CENTRAL_2.getCode()),
+            new IpV4Prefix("52.219.168.0/24", US_EAST_1.getCode()),
+            new IpV4Prefix("1.2.4.5/21", GLOBAL.getCode())
     );
 
     @Nested

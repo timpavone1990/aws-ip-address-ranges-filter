@@ -12,10 +12,10 @@ class AwsIpAddressRangesClientResponseTest {
 
     @Test
     void testGetAllPrefixes() {
-        final var ipV4Prefixes = Set.of(new IpV4Prefix("1.2.3.4/11", EU_CENTRAL_1));
+        final var ipV4Prefixes = Set.of(new IpV4Prefix("1.2.3.4/11", EU_CENTRAL_1.getCode()));
         final var ipV6Prefixes = Set.of(
-            new IpV6Prefix("2600:1ff2:4000::/40", EU_CENTRAL_1),
-            new IpV6Prefix("2a05:d07a:a000::/40", EU_CENTRAL_1)
+            new IpV6Prefix("2600:1ff2:4000::/40", EU_CENTRAL_1.getCode()),
+            new IpV6Prefix("2a05:d07a:a000::/40", EU_CENTRAL_1.getCode())
         );
         final var response = new AwsIpAddressRangesClientResponse(ipV4Prefixes, ipV6Prefixes);
 

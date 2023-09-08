@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class IpV6PrefixTest {
 
-    private final IpV6Prefix ipV6Prefix = new IpV6Prefix("2a05:d07a:a000::/40", EU_CENTRAL_1);
+    private final IpV6Prefix ipV6Prefix = new IpV6Prefix("2a05:d07a:a000::/40", EU_CENTRAL_1.getCode());
 
     @Test
     void ipPrefix() {
@@ -17,13 +17,13 @@ class IpV6PrefixTest {
 
     @Test
     void region() {
-        assertThat(ipV6Prefix.region()).isEqualTo(EU_CENTRAL_1);
+        assertThat(ipV6Prefix.region()).isEqualTo(EU_CENTRAL_1.getCode());
     }
 
     @Test
     void withRegionCode() {
-        final var copy = ipV6Prefix.withRegionCode(US_EAST_1);
+        final var copy = ipV6Prefix.withRegionCode(US_EAST_1.getCode());
         assertThat(copy.ipPrefix()).isEqualTo("2a05:d07a:a000::/40");
-        assertThat(copy.region()).isEqualTo(US_EAST_1);
+        assertThat(copy.region()).isEqualTo(US_EAST_1.getCode());
     }
 }

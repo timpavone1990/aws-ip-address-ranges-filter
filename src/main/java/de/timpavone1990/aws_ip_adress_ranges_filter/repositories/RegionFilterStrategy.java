@@ -19,8 +19,8 @@ public enum RegionFilterStrategy {
         }
 
         return prefixes
-            .filter(prefix -> prefix.region() == GLOBAL ||
-                    prefix.region().getCode().toLowerCase(ROOT)
+            .filter(prefix -> "GLOBAL".equalsIgnoreCase(prefix.region()) ||
+                    prefix.region().toLowerCase(ROOT)
                             .startsWith(regionFilter.getValue().toLowerCase(ROOT)));
     }),
 

@@ -8,7 +8,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class IpV4PrefixTest {
 
-    private final IpV4Prefix ipV4Prefix = new IpV4Prefix("1.2.3.4/11", EU_CENTRAL_1);
+    private final IpV4Prefix ipV4Prefix = new IpV4Prefix("1.2.3.4/11", EU_CENTRAL_1.getCode());
 
     @Test
     void ipPrefix() {
@@ -17,14 +17,14 @@ class IpV4PrefixTest {
 
     @Test
     void region() {
-        assertThat(ipV4Prefix.region()).isEqualTo(EU_CENTRAL_1);
+        assertThat(ipV4Prefix.region()).isEqualTo(EU_CENTRAL_1.getCode());
     }
 
     @Test
     void withRegionCode() {
-        final var copy = ipV4Prefix.withRegionCode(US_EAST_1);
+        final var copy = ipV4Prefix.withRegionCode(US_EAST_1.getCode());
         assertThat(copy.ipPrefix()).isEqualTo("1.2.3.4/11");
-        assertThat(copy.region()).isEqualTo(US_EAST_1);
+        assertThat(copy.region()).isEqualTo(US_EAST_1.getCode());
 
     }
 }

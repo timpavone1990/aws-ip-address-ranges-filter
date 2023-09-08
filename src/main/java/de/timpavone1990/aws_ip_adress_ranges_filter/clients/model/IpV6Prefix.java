@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 public record IpV6Prefix(
     @JsonProperty("ipv6_prefix") String ipPrefix,
-    RegionCode region
+    String region
 ) implements Prefix {
     @Override
     public String ipPrefix() {
@@ -12,12 +12,12 @@ public record IpV6Prefix(
     }
 
     @Override
-    public RegionCode region() {
+    public String region() {
         return region;
     }
 
     @Override
-    public Prefix withRegionCode(final RegionCode regionCode) {
+    public Prefix withRegionCode(final String regionCode) {
         return new IpV6Prefix(ipPrefix, regionCode);
     }
 }
