@@ -18,7 +18,7 @@ public record IpV4Prefix (
     }
 
     @Override
-    public Prefix withRegionCode(final String regionCode) {
-        return new IpV4Prefix(ipPrefix, regionCode);
+    public Prefix withRegion(final String region) {
+        return new IpV4Prefix(ipPrefix, region);
     }
 }

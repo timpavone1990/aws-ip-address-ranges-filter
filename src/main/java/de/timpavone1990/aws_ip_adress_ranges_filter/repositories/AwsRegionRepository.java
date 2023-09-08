@@ -50,7 +50,7 @@ public class AwsRegionRepository {
         final var globalPrefixes = globalAndRegionalPrefixes.get(true);
         final var regionalPrefixes = globalAndRegionalPrefixes.get(false);
         final var uniqueRegions = regionalPrefixes.stream().map(Prefix::region).collect(toSet());
-        final var expandedGlobalPrefixes = globalPrefixes.stream().flatMap(globalPrefix -> uniqueRegions.stream().map(globalPrefix::withRegionCode));
+        final var expandedGlobalPrefixes = globalPrefixes.stream().flatMap(globalPrefix -> uniqueRegions.stream().map(globalPrefix::withRegion));
         return Stream.concat(regionalPrefixes.stream(), expandedGlobalPrefixes);
     }
 }

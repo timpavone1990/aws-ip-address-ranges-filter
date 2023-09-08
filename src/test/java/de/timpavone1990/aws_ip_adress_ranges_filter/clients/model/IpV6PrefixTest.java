@@ -20,7 +20,7 @@ class IpV6PrefixTest {
 
     @Test
     void withRegionCode() {
-        final var copy = ipV6Prefix.withRegionCode("us-east-1");
+        final var copy = ipV6Prefix.withRegion("us-east-1");
         assertThat(copy.ipPrefix()).isEqualTo("2a05:d07a:a000::/40");
         assertThat(copy.region()).isEqualTo("us-east-1");
     }

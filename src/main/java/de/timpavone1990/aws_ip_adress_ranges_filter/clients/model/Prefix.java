@@ -5,5 +5,5 @@ public interface Prefix {
     String ipPrefix();
     String region();
 
-    Prefix withRegionCode(String regionCode);
+    Prefix withRegion(String region);
 }

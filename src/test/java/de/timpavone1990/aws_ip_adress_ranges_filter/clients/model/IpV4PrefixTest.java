@@ -20,7 +20,7 @@ class IpV4PrefixTest {
 
     @Test
     void withRegionCode() {
-        final var copy = ipV4Prefix.withRegionCode("us-east-1");
+        final var copy = ipV4Prefix.withRegion("us-east-1");
         assertThat(copy.ipPrefix()).isEqualTo("1.2.3.4/11");
         assertThat(copy.region()).isEqualTo("us-east-1");
 
