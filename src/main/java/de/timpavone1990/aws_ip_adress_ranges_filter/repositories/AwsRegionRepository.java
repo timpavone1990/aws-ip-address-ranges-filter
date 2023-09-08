@@ -13,9 +13,7 @@ import java.util.Set;
 import java.util.stream.Stream;
 
 import static de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.GLOBAL;
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.mapping;
-import static java.util.stream.Collectors.toSet;
+import static java.util.stream.Collectors.*;
 
 @Repository
 public class AwsRegionRepository {
@@ -49,10 +47,11 @@ public class AwsRegionRepository {
     }
 
     private Stream<Prefix> expandGlobalPrefixes(final Stream<Prefix> prefixes) {
-        return prefixes.flatMap(prefix ->
-                GLOBAL != prefix.region()
-                        ? Stream.of(prefix)
-                        : de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal().stream().map(prefix::withRegionCode)
-        );
+        final var globalAndRegionalPrefixes = prefixes.collect(partitioningBy(prefix -> "GLOBAL".equalsIgnoreCase(prefix.region().getCode())));
+        final var globalPrefixes = globalAndRegionalPrefixes.get(true);
+        final var regionalPrefixes = globalAndRegionalPrefixes.get(false);
+        final var uniqueRegions = regionalPrefixes.stream().map(Prefix::region).collect(toSet());
+        final var expandedGlobalPrefixes = globalPrefixes.stream().flatMap(globalPrefix -> uniqueRegions.stream().map(globalPrefix::withRegionCode));
+        return Stream.concat(regionalPrefixes.stream(), expandedGlobalPrefixes);
     }
 }

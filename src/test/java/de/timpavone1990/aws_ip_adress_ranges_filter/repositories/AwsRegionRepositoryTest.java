@@ -89,17 +89,11 @@ class AwsRegionRepositoryTest {
         final var repository = new AwsRegionRepository(client, regionFilterStrategySupplier);
         final var regions = repository.findRegions(ALL);
 
-        assertThat(regions).hasSize(35);
+        assertThat(regions).hasSize(2);
 
         assertThat(regions).contains(
                 new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.EU_CENTRAL_1, Set.of("52.219.170.0/23", "1.2.3.4/24", "4.5.6.7/26", "2600:1ff2:4000::/40", "2600:1f69:e0c0::/46", "240f:80f8:4000::/40")),
                 new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.US_EAST_1, Set.of("52.219.168.0/24", "1.2.3.4/24", "4.5.6.7/26", "2a05:d07a:a000::/40", "2600:1f69:e0c0::/46", "240f:80f8:4000::/40"))
         );
-
-        de.timpavone1990.aws_ip_adress_ranges_filter.clients.model.RegionCode.getRegionsExceptGlobal()
-                .stream()
-                .filter(region -> region != EU_CENTRAL_1 && region != US_EAST_1).forEach(region -> {
-                    assertThat(regions).contains(new de.timpavone1990.aws_ip_adress_ranges_filter.model.Region(RegionCode.findByRegionCode(region.getCode()), Set.of("1.2.3.4/24", "4.5.6.7/26", "2600:1f69:e0c0::/46", "240f:80f8:4000::/40")));
-                });
     }
 }
